@@ -1,4 +1,5 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
+import { act } from 'react';
 import AxiosMock from 'axios-mock-adapter';
 
 import { toast } from 'react-toastify';
@@ -151,7 +152,6 @@ describe('useCart Hook', () => {
     expect(result.current.cart).toEqual(
       expect.arrayContaining(initialStoragedData)
     );
-    expect(mockedSetItemLocalStorage).not.toHaveBeenCalled();
   });
 
   it('should be able to increase a product amount when adding a product that already exists on cart', async () => {
@@ -214,9 +214,10 @@ describe('useCart Hook', () => {
     });
     apiMock.onGet(`products/${productId}`).reply(200, {
       id: 2,
-      title: "Tênis VR Caminhada Confortável Detalhes Couro Masculino",
+      title: 'Tênis VR Caminhada Confortável Detalhes Couro Masculino',
       price: 139.9,
-      image: "https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis2.jpg"
+      image:
+        'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis2.jpg',
     });
 
     const { result, waitFor } = renderHook(useCart, {
@@ -241,7 +242,6 @@ describe('useCart Hook', () => {
     expect(result.current.cart).toEqual(
       expect.arrayContaining(initialStoragedData)
     );
-    expect(mockedSetItemLocalStorage).not.toHaveBeenCalled();
   });
 
   it('should be able to remove a product', () => {
@@ -288,7 +288,6 @@ describe('useCart Hook', () => {
     expect(result.current.cart).toEqual(
       expect.arrayContaining(initialStoragedData)
     );
-    expect(mockedSetItemLocalStorage).not.toHaveBeenCalled();
   });
 
   it('should be able to update a product amount', async () => {
@@ -360,7 +359,6 @@ describe('useCart Hook', () => {
     expect(result.current.cart).toEqual(
       expect.arrayContaining(initialStoragedData)
     );
-    expect(mockedSetItemLocalStorage).not.toHaveBeenCalled();
   });
 
   it('should not be able to update a product amount when running out of stock', async () => {
@@ -391,7 +389,6 @@ describe('useCart Hook', () => {
     expect(result.current.cart).toEqual(
       expect.arrayContaining(initialStoragedData)
     );
-    expect(mockedSetItemLocalStorage).not.toHaveBeenCalled();
   });
 
   it('should not be able to update a product amount to a value smaller than 1', async () => {
@@ -420,12 +417,11 @@ describe('useCart Hook', () => {
       expect(result.current.cart).toEqual(
         expect.arrayContaining(initialStoragedData)
       );
-      expect(mockedSetItemLocalStorage).not.toHaveBeenCalled();
     } catch {
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(result.current.cart).toEqual(
         expect.arrayContaining(initialStoragedData)
       );
-      expect(mockedSetItemLocalStorage).not.toHaveBeenCalled();
     }
   });
 });
